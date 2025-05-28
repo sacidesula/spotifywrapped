@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import bgImage from '../assets/images2.png';
 
 interface StoryData {
   type: string;
@@ -75,54 +76,69 @@ const Wrapped = () => {
   const story = wrappedData.stories[currentIndex];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600">
-      <div className="relative w-[375px] h-[667px] border-8 border-black rounded-[40px] bg-black bg-opacity-60 text-white p-4 flex flex-col justify-center items-center overflow-hidden shadow-xl">
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-4"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="w-full max-w-xl bg-white bg-opacity-90 !text-black rounded-lg shadow-lg p-8 text-center">
+        <h2 style={{ color: 'black' }} className="text-xs font-light tracking-widest uppercase mb-4  mx-auto">
+  {story.title}
+</h2>
 
-        <h2 className="text-sm font-light tracking-widest uppercase mb-4">{story.title}</h2>
+
+        
 
         {story.image && (
-          <img
-            src={story.image}
-            alt="story"
-            className="w-20 h-20 object-cover rounded-lg mb-4 shadow-md"
-            style={{ maxWidth: '360px', maxHeight: '360px' }}
-          />
+         <img
+    src={story.image}
+    alt="story"
+    className="w-20 h-20 object-cover rounded-lg mb-4 shadow-md"
+    style={{ maxWidth: '360px', maxHeight: '360px' }}
+  />
         )}
 
         {story.type === 'topTrack' && story.data?.name && (
           <>
-            <p className="text-xl font-bold text-center mb-1">{story.data.name}</p>
-            <p className="text-sm text-gray-300 text-center">
+            <p className="text-2xl font-bold mb-1">{story.data.name}</p>
+            <p className="text-sm text-gray-300">
               {story.data.artists?.map((a: any) => a.name).join(', ')}
             </p>
           </>
         )}
 
         {story.type === 'topArtist' && (
-          <p className="text-xl font-semibold mt-4">{story.artistName}</p>
+          <p className="text-2xl font-semibold mt-4">{story.artistName}</p>
         )}
 
         {story.type === 'mlCluster' && (
-          <div className="text-center mt-4">
+          <div className="mt-4">
             <p className="text-xl font-bold mb-2">🎧 Müzik Tarzın</p>
             <p className="text-sm text-gray-200">{story.genres?.join(', ')}</p>
           </div>
         )}
 
-        <div className="absolute bottom-6 left-0 right-0 flex justify-between px-8">
+        <div className="mt-6 flex justify-between">
           <button
             onClick={handlePrev}
-            className={`bg-white bg-opacity-20 px-4 py-1 rounded-full ${currentIndex === 0 ? 'opacity-30 cursor-not-allowed' : ''}`}
+            className={`bg-black text-white px-5 py-2 rounded-full border border-white transition ${
+              currentIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white hover:text-black'
+            }`}
             disabled={currentIndex === 0}
           >
-            ◀
+            ◀ Geri
           </button>
           <button
             onClick={handleNext}
-            className={`bg-white bg-opacity-20 px-4 py-1 rounded-full ${currentIndex === wrappedData.stories.length - 1 ? 'opacity-30 cursor-not-allowed' : ''}`}
+            className={`bg-black text-white px-5 py-2 rounded-full border border-white transition ${
+              currentIndex === wrappedData.stories.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white hover:text-black'
+            }`}
             disabled={currentIndex === wrappedData.stories.length - 1}
           >
-            ▶
+            İleri ▶
           </button>
         </div>
       </div>
